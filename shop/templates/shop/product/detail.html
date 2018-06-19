@@ -1,0 +1,62 @@
+{% include "shop/base.html" %}
+
+{% load static %}
+<div class="catalogueWindow">
+    <div class="productWindow">
+        <img src="{{ product.img }}" style="max-width: 500px"/>
+        <div style="position: absolute; top: 2%; left: 55%">
+            <h3>{{ product.name }}</h3>
+            <div style="position: relative; top: 10px">
+                <p style="font-size: 12px"> 
+                    Артикул: 
+                    <b style="font-size: 14px">{{ product.item_code }}</b>
+                </p>
+                    <p style="margin-right: 10px">Описание: {{ product.description }}</p>
+                
+                <p style="position: relative"> 
+                    Бренд: {{ product.brand }}
+                </p>
+                <p class="relative">{{ product.price }}UAH</p>
+            </div>
+        </div>
+        <form action="{% url 'cart:CartAdd' product.id %}" method="post" class="form">
+            {{ cart_product_form }}
+            {% csrf_token %}
+            <button class="buyButton" type="submit"><h5 class="solid">Buy</h5></button>
+        </form>
+    </div>
+</div>
+<script>
+    $(function() {
+      $("#q").autocomplete({
+        source: 'search',
+        minLength: 2,
+        select: function(a,b) {
+            $(this).val(b.item.value);
+            $("#Search").submit()
+        }
+      });
+    });
+</script>
+<!--{% load static %}-->
+
+<!--{% block title %}-->
+<!--  {{ product.name }}-->
+<!--{% endblock %}-->
+<!--{% block content %}-->
+<!--  <div class="product-detail">-->
+<!--    <div class="col-sm-4">-->
+<!--      <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no-image.jpg"%}{% endif %}" class="img-responsive">-->
+<!--    </div>-->
+<!--    <div class="col-sm-8">-->
+<!--      <h1>{{ product.name }}</h1>-->
+<!--      <h2><a href="{{ product.category.get_absolute_url }}">{{ product.category }}</a></h2>-->
+<!--      <p class="price">-->
+<!--        {{ product.price }} руб.-->
+<!--      </p>-->
+<!--      <span>-->
+<!--        {{ product.description | linebreaks}}-->
+<!--      </span>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--{% endblock %}-->

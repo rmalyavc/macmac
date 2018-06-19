@@ -1,0 +1,42 @@
+{% include "shop/base.html" %}
+<div class="catalogueWindow">
+  <div style="position: relative; top: -20px">    
+  <h1 class="solid" align="center">Оформление заказа</h1>
+  </div>
+  <div class="">
+    <h2 class="solid">Заполните форму</h2>
+    <form action="." method="post" class="orderform">
+        <div style="text-align: right">        
+            {{ form.as_p }}
+            {% csrf_token %}
+        </div>  
+        <div style="position: relative; right: -400%">
+            <button class="categoryButton" type="submit"><h5 class="solid">Оформить заказ</h5></button>
+        </div>   
+    </form>
+  </div>
+
+  <div style="position: absolute; top: 17%; left: 37.2%">
+    <h2 style="color:#0a0043; left:13%; position:relative">Ваш заказ</h2>
+    
+      {% for item in cart  %}
+        <dt>
+            <img src="{{ item.product.img }}" height="50px"/>
+            {{ item.product.name }} | Количество: {{ item.quantity }} | Цена: {{ item.total_price }}
+        </dt>
+      {% endfor %}
+    
+  </div>
+</div>
+<script>
+    $(function() {
+      $("#q").autocomplete({
+        source: 'search',
+        minLength: 2,
+        select: function(a,b) {
+            $(this).val(b.item.value);
+            $("#Search").submit()
+        }
+      });
+    });
+</script>

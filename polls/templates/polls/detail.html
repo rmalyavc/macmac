@@ -1,0 +1,46 @@
+{% load static %}
+{% include 'polls/index.html' %}
+<div class="catalogueWindow">
+    <div class="productWindow">
+        <img src="{{ product.img }}" style="width: 600px; height: 600px"/>
+        <div style="position: absolute; top: 2%; left: 55%">
+            <h3>{{ product.name }}</h3>
+            <div style="position: relative; top: 10px">
+                <p style="font-size: 12px"> Артикул: 
+                    <b style="font-size: 16px">
+                        {{ product.item_code }}
+                    </b>
+                    <p class="relative">
+                        <p>Описание: {{ product.description }}</p>
+                    </p>
+                </p>
+                <p style="position: relative"> 
+                    Бренд: {{ product.brand }}
+                </p>
+                <p class="relative">
+                    Made in {{ product.madeIn }}
+                </p>
+                <p class="relative">
+                    {{ product.price }}UAH
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!--<h1>{{ question.question_text }}</h1>-->
+
+<!--{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}-->
+
+<!--<form action="{% url 'polls:vote' question.id %}" method="post">-->
+<!--{% csrf_token %}-->
+<!--{% for choice in question.choice_set.all %}-->
+<!--    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />-->
+<!--    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />-->
+<!--{% endfor %}-->
+<!--<input type="submit" value="Vote" />-->
+<!--</form>-->

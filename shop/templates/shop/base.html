@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
+
+    <head>
+
+        <link href=https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta/> 
+        <meta charset="utf-8"/>
+        <meta content="initial-scale=1, width=device-width" name="viewport"/>
+        
+
+        <!-- documentation at http://getbootstrap.com/, alternative themes at https://www.bootstrapcdn.com/bootswatch/ -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+        
+        <link rel="stylesheet" type="text/css" href="{% static 'polls/styles.css' %}" />
+        
+
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://cdn.rawgit.com/corejavascript/typeahead.js/master/dist/typeahead.jquery.js"></script>
+        <!-- http://handlebarsjs.com/ -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" media="all" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
+
+
+        <title>Final</title>
+        
+    </head>
+
+    <body>
+        <div class="window"> 
+            <div>
+               <a href="{% url 'shop:Index' %}" id="logo"><img src="{% static 'polls/logo.png' %}" style="height: 20px; position: absolute; left: 0.5%; top: 3px"><b class="mainlink"> <h5>FINAL PROJECT</h5></b></a>
+            </div>   
+               <!--<button id="cart" class="cart" title="Cart">-->
+               <div class="cart">
+                    {% with total_items=cart|length %}
+                    
+                    <a href="{% url 'cart:CartDetail' %}" style="color: white">
+                        <img src="http://www.clker.com/cliparts/c/8/8/h/4/d/shopping-cart-md.png" height="22px"/>
+                        {% if cart|length > 0 %}
+                            <div style="position: relative; top: -15px; left: 30px; height: 2%">
+                            {{ total_items }} {% if cart|length > 4 %} товаров {% elif cart|length == 1 %} товар {% else %} товара {% endif %} {{ cart.get_total_price }} UAH
+                            </div>
+                        {% else %}
+                        <div style="position: relative; top: -15px; left: 30px; height: 2%">
+                            <p style="color: white">Корзина пустая</p>
+                        </div>
+                        {% endif %}
+                    </a>
+                    {% endwith %}
+               </div>
+               <!--</button>-->
+               <a href="{% url 'shop:Register' %}" id="login" title="Login" class="login">
+                    <img src="https://www.medicalert.org.au/uploads/login.png" height="20px" id="mainwindow"/>
+                </a>
+                <a href="{% url 'shop:Register' %}" id="register" title="Register" class="register">
+                    <p style="color: white">Register</p>
+                </a>
+        </div> 
+        <div id="infoWindow" class="infoWindow">
+            <div class="mainlogo">
+                <img src="{% static 'polls/logo.png' %}" style="position: relative; width: 80px" class="LOGO">
+                <!--<h3 style="color: #0a0043; position: absolute; top: 30%; left: 90px; display: inline-block">Final Project</h3>-->
+            </div>
+            <form id="form">
+                <div class="search">
+                    <div class="ui-widget">
+                        <form id="Search">
+                            <label class="sr-only" for="q"></label>
+                            <input class="form-control" id="q" name="q" placeholder="Введите запрос" type="text"/>
+                            <button class="searchButton" method="get" formaction="{% url 'shop:ProductList' %}" type="submit">
+                                <img src="https://cdn1.iconfinder.com/data/icons/hawcons/32/698627-icon-111-search-512.png" 
+                            style="height: 25px; position: absolute; top: 18%; left: 4px"><h5 class="solid">Поиск</h5></button>    
+                        </form>
+                    </div>                   
+                </div>
+            </form>
+            <div class="contacts">
+                <p class="solid" text-align="right">
+                    <!--<p align="center" class="solid">Контакты</p>-->
+                    <h4 class="solid">
+                    +38(063)754-15-69<br>
+                    <!--+380XXXXXXXXX<br>-->
+                    <!--+380XXXXXXXXX<br>-->
+                    </h4>
+                    <h5 class="solid">info@finalproject.com</h5>
+                </p>
+            </div>
+        </div>
+                
+            
+            
+        <!--</div>-->
+        {% if index %}
+            <div id="post" class="newWindow">
+                    <a href="{% url 'shop:CategoryList' %}">
+                        <button class="windownext" id="categories">
+                            <h6 style="color: #0a0043">КАТЕГОРИИ</h6>
+                                <div class="drop">
+                                    {% for cat in categories %}
+                                        {% if not cat.slug == 'all' %}
+                                            <div class="dropelement">
+                                                <a href="{{ cat.get_cat_url }}">
+                                                    <dt><p class="test">{{ cat.name }}</p></dt>
+                                                </a>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                    <div class="dropelement">
+                                        <a href="{% url 'shop:ProductList' %}">
+                                            <dt><p class="test">All</p></dt>
+                                        </a>
+                                    </div>
+                                </div>
+                        </button>
+                    <a/>
+                    <a href="{% url 'shop:Brands' %}">
+                        <button class="windownext" id="brands">
+                            <h6 style="color: #0a0043">БРЕНДЫ</h6>
+                                <div class="drop">
+                                    {% for brand in brands %}
+                                        <div class="dropelement">
+                                            <a href="{{ brand.get_absolute_url }}">
+                                                <dt><p class="test">{{ brand.name }}</p></dt>
+                                            </a>
+                                        </div>
+                                    {% endfor %} 
+                                </div>
+                        </button>
+                    <a/>
+                    <a href="{% url 'shop:Delivery' %}">
+                        <button class="windownext" id="delivery">
+                            <h6 class="solid">ДОСТАВКА</h6>
+                        </button>
+                    </a>
+                </div>
+            <div class="carusel">
+                <div class="banners" id="banner_cont"></div>
+                <img src="http://www.icon2s.com/wp-content/uploads/2014/07/next-arrow-239x300.png" class="prevButton" onclick="prev_next(this);"/>
+                <img src="http://www.icon2s.com/wp-content/uploads/2014/07/next-arrow-239x300.png" class="nextButton" onclick="prev_next(this);"/>
+                <!-- <button class="prevButton"><img src="http://www.icon2s.com/wp-content/uploads/2014/07/next-arrow-239x300.png" class="prev_next_img"></button>
+                <button class="nextButton"><img src="http://www.icon2s.com/wp-content/uploads/2014/07/next-arrow-239x300.png" class="prev_next_img"></button> -->
+            </div>
+            <h1>
+                {% if user.is_authenticated %}
+                    Hello {{ user.avatar }}
+                {% endif %}
+            </h1>
+        {% endif %}
+        <script>
+            $(function() {
+              $("#q").autocomplete({
+                source: 'search',
+                minLength: 2,
+                select: function(a,b) {
+                    $(this).val(b.item.value);
+                    $("#Search").submit()
+                }
+              });
+            });
+        </script>
+        {% if index %}
+            <script>
+                // $("button .drop").hover(function(){
+                //     $(".drop").css('width', '17%');
+                // });
+                var i=0;
+                var ads = [];
+                var interval_id;
+                '{% for ad in ads %}';
+                    var testobject = {};
+                    testobject.name = '{{ ad.name }}';
+                    testobject.img = '{{ ad.img }}';
+                    testobject.link = '{{ ad.get_absolute_url }}';
+                    ads.push(testobject);
+                '{% endfor %}';
+                
+                function postBanner(){
+                    var banners = document.getElementById('banner_cont');
+                    if (i >= ads.length){
+                        i=0;
+                    }
+                    else if (i<0){
+                        i = ads.length - 1;
+                    }
+                    banners.innerHTML = '';
+                    banners.innerHTML = '<a href="' + ads[i].link + '" class="banner_img" id="curr_banner"><img src="' + ads[i].img + '" width="100%"></a>';
+                    i=i+1;
+                }
+
+                function prev_next(elem) {
+                    if (elem.getAttribute('class') === 'prevButton')
+                        i -= 2;
+                    clearInterval(interval_id);
+                    postBanner();
+                    startCarousel();
+                }
+
+                function startCarousel() {
+                    interval_id = setInterval(postBanner, 3000);
+                }
+                postBanner();
+                // startCarousel();
+                
+                function makebuttons(){
+                    var buttons = [];
+                    var i=0;
+                    var teststring1 = ["This","Is","My","Final", "Project", "Category", "New"];
+                    var teststring = ["THIS", "IS", "MY", "FINAL", "PROJECT"];
+                    var list ="";
+                    for (i in teststring1){
+                        list += '<div class="dropelement"><dt><p class="test">' + teststring1[i] + '</p></dt></div>'; 
+                    } 
+                    for (i in teststring){
+                        buttons.push('<a href=""><button class="windownext" id="' + teststring[i] + '"><h6 class="solid">' + teststring[i] + '</h6><div class="drop">' + list + '</div></button><a/>');
+                        $('#post').append(buttons[i]);
+                    }
+                }
+
+                function transform_banner() {
+                    var banner = document.getElementById('curr_banner');
+                    banner.style.transform = 'rotateY(50deg)';
+                    console.log(banner.style.transform);
+                }
+
+                transform_banner();
+
+                $(makebuttons()).appendTo('#post');
+            </script>
+        {% endif %}
+    </body>
+
+</html>
+
+<!--{% load static %}-->
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <title>{% block title %}{% endblock %}</title>-->
+  <!-- Styles -->
+<!--  <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">-->
+<!--  <link rel="stylesheet" href="{% static "css/style.css" %}">-->
+<!--</head>-->
+<!--<body>-->
+<!--  <section id="header">-->
+<!--    <div class="top container">-->
+<!--      Мой Онлайн-Магазин-->
+<!--    </div>-->
+<!--    <div class="top-bl">-->
+<!--      <div class="container">-->
+<!--        <div class="cart">Ваша корзина пуста</div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </section>-->
+<!--  <section id="content row" class="container">-->
+<!--    {% block content %}{% endblock %}-->
+<!--  </section>-->
+<!--</body>-->
+<!--</html>-->

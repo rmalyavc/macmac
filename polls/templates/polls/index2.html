@@ -1,0 +1,160 @@
+{% load static %}
+{% include 'polls/index.html' %}
+<div class="catalogueWindow">
+    
+    
+    {% if latest_product_list %}
+        <div class="categoryList"><div class="brands"></div></div>
+        <div class="goodsWindow"></div>
+            <script>
+                var category = 'All';
+                var brand = 'Allbrands';
+                
+                var getUrlParameter = function getUrlParameter(sParam) {
+                    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                    sURLVariables = sPageURL.split('&'),
+                    sParameterName,
+                    i;
+
+                    for (i = 0; i < sURLVariables.length; i++) {
+                        sParameterName = sURLVariables[i].split('=');
+                
+                        if (sParameterName[0] === sParam) {
+                            return sParameterName[1] === undefined ? true : sParameterName[1];
+                        }
+                    }
+                };
+                var string = getUrlParameter('category');
+                if (string != ''){
+                    category = string;
+                }
+                else{
+                    category = 'All';
+                }
+                
+                function postProducts() {
+                    $(".goodsWindow").html('');
+                    $(".goodsWindow").append('<h3 style="color: #0a0043" align="center">' + category + '</h3>');
+                    '{% for product in latest_product_list %}';
+                        if (('{{ product.brand }}' == brand || brand == 'Allbrands') && ('{{ product.category }}' == category || category == 'All')) {
+                            $(".goodsWindow").append('<button class="buttonnext" id="{{ product.item_code }}"><img style="width: 100px" src="{{ product.image }}"/><div style="position: relative; bottom: -10px"><p>{{ product.name }} </p><p>{{ product.category }} </p><p style="position: relative; top:-10px; font-size: 11px"> Артикул: <b style="font-size: 14px">{{ product.item_code }}</b></p><p style="position: relative; top:-20px">{{ product.price }}UAH</p></div></button>')    
+                            $("#{{ product.item_code }}").click(function() {
+                                $(".goodsWindow").css('display', 'none');
+                                $(".categoryList").css('display', 'none');
+                                // $(".catalogueWindow").html('');
+                                var string = '<div class="productWindow"><img src="{{ product.image }}" style="width: 600px; height: 600px"/><div style="position: absolute; top: 2%; left: 55%"><h3>{{ product.name }}</h3><div style="position: relative; top: 10px"><p style="font-size: 12px"> Артикул: <b style="font-size: 16px">{{ product.item_code }}</b><p class="relative"><p>Описание: {{ product.description }}</p></p></p><p style="position: relative"> Бренд: {{ product.brand }}<p></p><p class="relative">Made in {{ product.madeIn }}</p><p class="relative">{{ product.price }}UAH</p></div></div></div>';
+                                $(".catalogueWindow").append('<div class="try"></div>');
+                                $(".try").append('<button id="close" title="Close" class="closeButton" style="background-color: white; width: 2.5%; position: relative; top: 6px; left: 98%; border: 1px solid white"><img src="https://hot-bullydog.azureedge.net/images/close-icon-active.svg" style="width: 100%; height: 100%"/></button>');
+                                $(".try").append(function(i){
+                                    return string;
+                                });
+                                $(".try").append('<button class="buyButton"><h4 style="position: relative; color: #0a0043">Buy</h4></button>');
+                                $(".closeButton").click(function(){
+                                    $(".goodsWindow").css('display', 'block');
+                                    $(".categoryList").css('display', 'block');
+                                    // location.reload();
+                                    $(".try").html('');
+                                });
+                            });        
+                        } 
+                    '{% endfor %}';
+                    
+                }
+                
+                function categoryList(){
+                    var buttons = [];
+                    var list = ["Cookware","Knifes","Glass","Containers", "Grills", "Bar", "All"];
+                    $(".categoryList").append('<a href="http://ide50-stanly-white.cs50.io:8080/polls/categories"><h3 class="solid">Categories</h3></a>');
+                    for (i in list){
+                        buttons.push('<div><button class="categoryButton" id="' + list[i] + '" name="' + list[i] + '"><h6 class="solid">' + list[i] + '</h6></button></div>');
+                        $(".categoryList").append(buttons[i]);
+                    }
+                    $(".categoryButton").click(function(){
+                        category = (this).name;
+                        $(".categoryButton").css('background', 'rgba(200,200,200,0.4)');
+                        $("#" + category).css('background-color', 'red');
+                        postProducts();
+                    });
+                
+                    var brands = ["Rösle","Richardson","La Rochere","EMSA", "Big Green Egg", "BergHOFF", "Broil King", "Allbrands"];
+                    $(".brands").append('<h3 class="solid">Brands</h3>');
+                        for (i in brands){
+                            $(".brands").append('<div><button class="brandButton" id="' + brands[i] + '" name="' + brands[i] + '"><h6 class="solid">' + brands[i] + '</h6></button></div>')
+                        }
+                    $(".categoryList").append('<div style="padding: 20px"><p></p></div><button class="removeButton" id="remove"><h6 class="solid">Remove all filters</h6></button>');
+                    $(".brandButton").click(function(){
+                        brand = (this).name;
+                        $(".brandButton").css('background', 'rgba(200,200,200,0.4)');
+                        $("#" + brand).css('background-color', 'red');
+                        postProducts();
+                    });
+                    $("#remove").click(function(){
+                        $(".brandButton").css('background', 'rgba(200,200,200,0.4)');
+                        $(".categoryButton").css('background', 'rgba(200,200,200,0.4)');
+                        category = 'All';
+                        brand = 'Allbrands';
+                        postProducts();
+                    });
+                }
+                
+                categoryList();
+                postProducts();
+            </script>
+        
+        
+        
+    {% elif categories %}
+        <form action="{% url 'polls:catalogue' %}" method="get"/>
+            {% for category in categories %}
+                
+                    <!--<input type="hidden" name="category" value = "{{ category.name }}"/>    -->
+                    <button class="buttonnext" type="submit" name="category" value="{{ category.name }}">
+                        <img style="width: 100px" src="{{ category.image }}"/>
+                        <div>
+                            <b>{{ category.name }}</b>
+                        </div>
+                    </button>
+                
+            {% endfor %}
+            <button class="buttonnext" type="submit" name="category" value="All">
+                <div>
+                    <h2 style="text-align: right; color: #0a0043">All Goods</h2>
+                </div>
+            </button>
+        </form>
+        <!--<a style="position: relative; right: 1%" href="http://ide50-stanly-white.cs50.io:8080/polls/categories/catalogue"><h2 style="text-align: right; color: #0a0043">All Goods</h2></a>-->
+    {% elif brands %}
+            {% for brand in brands %}
+                <div class="relative">
+                    
+                </div>
+                    <button class="buttonnext" type="submit" name="brand" id="{{ brand.name }}">
+                        <img style="width: 100px" src="{{ brand.image }}"/>
+                    </button>
+                    <script>
+                        $("#{{brand.name}}").click(function(){
+                            $(".catalogueWindow").append('<div class="productWindow"></div>');
+                            $(".catalogueWindow").append('<img src="{{ brand.image }}" style="width: 600px"/><div style="position: absolute; top: 2%; left: 55%"><h3>{{ brand.name }}</h3><div style="position: relative; top: 10px"><p>{{ brand.description }}</p></p></div></div>');
+                        });
+                    </script>
+                
+            {% endfor %}
+            
+    {% endif %}
+    
+</div>
+
+
+
+
+
+<!--<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />-->
+<!--{% if latest_question_list %}-->
+<!--    <ul>-->
+<!--    {% for question in latest_question_list %}-->
+<!--    <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>-->
+<!--    {% endfor %}-->
+<!--    </ul>-->
+<!--{% else %}-->
+<!--    <p>No polls are available.</p>-->
+<!--{% endif %}-->

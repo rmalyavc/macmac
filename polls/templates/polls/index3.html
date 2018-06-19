@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+{% load static %}
+{% include 'polls/index.html' %}
+<form id="registration" style="position: absolute; top: 7%; left: 40%" submit="false">
+    <div class="formstyle" id="login">
+        <input class="form-control"  name="username" placeholder="Логин" type="text"/>
+    </div>
+    <div class="formstyle" id="password">
+        <input class="form-control" name="password" placeholder="Пароль" type="password"/>
+    </div>
+    
+    <div class="formstyle" id="confirmation">
+        <input class="form-control" name="confirmation" placeholder="Подтвердите пароль" type="password"/>
+    </div>
+     <div class="formstyle" id="email">
+        <input class="form-control" name="email" placeholder="e-mail" type="text"/>
+    </div>
+    <div class="formstyle" id="name">
+        <input class="form-control" name="name" placeholder="Имя" type="text"/>
+    </div>
+    <div class="formstyle" id="firstname">
+        <input class="form-control" name="firstname" placeholder="Фамилия" type="text"/>
+    </div>
+    <div class="formstyle" id="phone">
+        <input class="form-control" name="phone" placeholder="Телефон" type="text"/>
+    </div>
+    <div style="position: absolute; top: 100%; width: 500%; left: 27%">
+        <button class="windownext" type="submit"><div class="dropelement"><h5>Регистрация</h5></div></button>
+    </form>
+    <script>
+        var form = document.getElementById('registration');
+        
+        var string = '<div class="content>"<p style="color: red; text-align: center">';
+        var string1 = '</p></div>';
+        form.onsubmit = function(){
+            $("div.content").html('');
+            if (form.username.value == '') {
+                $(string + 'Missing username' + string1).appendTo('#login');
+                return false;
+            }
+            else if (form.password.value == '') {
+                $(string + 'Missing password' + string1).appendTo('#password');
+                return false;
+            }
+            else if (form.password.value != form.confirmation.value) {
+                $(string + 'Passwords don\'t match' + string1). appendTo('#confirmation');
+                return false;
+            }
+            else if (form.email.value == '') {
+                $(string + 'Missing e-mail' + string1). appendTo('#email');
+                return false;
+            }
+        };
+    </script>
+</div>
+    

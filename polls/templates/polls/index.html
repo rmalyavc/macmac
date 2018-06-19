@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
+
+    <head>
+
+        <link href=https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta/> 
+        <meta charset="utf-8"/>
+        <meta content="initial-scale=1, width=device-width" name="viewport"/>
+        
+
+        <!-- documentation at http://getbootstrap.com/, alternative themes at https://www.bootstrapcdn.com/bootswatch/ -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+        
+        <link rel="stylesheet" type="text/css" href="{% static 'polls/styles.css' %}" />
+        
+
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://cdn.rawgit.com/corejavascript/typeahead.js/master/dist/typeahead.jquery.js"></script>
+        <!-- http://handlebarsjs.com/ -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+
+        <title>Final</title>
+        
+    </head>
+
+    <body>
+        <div class="window"> 
+               <a href="http://ide50-stanly-white.cs50.io:8080/polls/" id="logo"><b class="mainlink"> <h5>FINAL PROJECT</h5></b></a>
+               <button id="cart" class="cart" title="Cart">
+                   <a href="http://ide50-stanly-white.cs50.io:8080/cart/">
+                       <img src="http://www.clker.com/cliparts/c/8/8/h/4/d/shopping-cart-md.png" height="22px"/>
+                   </a>
+               </button>
+               <a href="http://ide50-stanly-white.cs50.io:8080/polls/login" id="login" title="Login" class="login">
+                    <img src="https://www.medicalert.org.au/uploads/login.png" height="20px" id="mainwindow"/>
+                </a>
+                <a href="http://ide50-stanly-white.cs50.io:8080/polls/register" id="register" title="Register" class="register">
+                    <p style="color: white">Register</p>
+                </a>
+                <div class="cartWindow"></div>
+                
+        </div> 
+        <div id="post" class="newWindow">
+            
+        </div>
+        
+        {% if latest_question_list %}
+        <script src="{% static 'polls/scripts.js' %}">
+            
+            
+           
+        </script>
+        {% endif %}
+    </body>
+
+</html>

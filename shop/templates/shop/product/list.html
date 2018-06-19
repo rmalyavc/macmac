@@ -1,0 +1,201 @@
+{% include 'shop/base.html' %}
+
+{% load static %}
+
+<div class="catalogueWindow">
+    <div class="categoryList"></div>
+    <div class="goodsWindow"></div>
+    
+    
+        
+            <script>
+                var brandFilters = false;
+                var discount = false;
+                var category = '{{ category.name }}';
+                '{% if not category %}';
+                    category = 'All';
+                '{% endif %}';
+                var brands = [];
+                function delspaces(name){
+                    var spaceFree = '';
+                    for(var i=0; i<name.length; i++){
+                        if(name[i] != ' '){
+                            spaceFree += name[i];
+                        }
+                    }
+                    return spaceFree;
+                }
+                
+                function brandIndex(needle, brandlist){
+                    for(var i=0; i<brandlist.length; i++){
+                        if(brandlist[i] == needle){
+                            return i;
+                        }
+                    }
+                    return -1;
+                }
+                
+                function postProducts() {
+                    if (category == undefined) {
+                        category = 'All';
+                    }
+                    $(".goodsWindow").html('');
+                    $(".goodsWindow").append('<form class="sortform" id="Sort" action="' + "{% url 'shop:ProductList' %}" + '"><label class="sr-only" for="sort"></label><select name="sort" id="sort"><option value="cheap">От дешёвых к дорогим</option><option value="expansive">От дорогих к дешёвым</option></select><input type="hidden" id="cat" name="cat" value="{{ category.slug }}"><button class="sortButton" method="get" formaction="' + "{% url 'shop:ProductList' %}" + '" type="submit"><img src="https://cdn1.iconfinder.com/data/icons/streamline-keyboard/60/cell-6-0-480.png" style="height:22px; position:relative; left: -5px"/></button></form>');
+                    $('select').on('change', function() {
+                        this.form.submit();
+                    });
+                    $(".goodsWindow").append('<form class="testform"></form>');
+                    '{% for product in products %}';
+                        var currbrand = '{{ product.brand }}';
+                        var index = brandIndex(currbrand, brands);
+                            if ((brands.length == 0 || index != -1) && ('{{ product.category }}' == category || category == 'All') && ('{{ product.discount }}' == 'True' || discount == false)) {
+                                $(".testform").append('<span><a href="{{ product.get_absolute_url }}" class="buttonnext" id="{{ product.item_code }}">{% if product.discount == True %}<img src="' + "{% static 'polls/master.png' %}" + '" style="width: 50px; position: absolute; left: 50%">{% endif %}<img style="width: 100px; top: 1%" src="media/{{ product.image }}"/><div style="position: relative; bottom: -10px"><p class="solid">{{ product.name }} </p><p style="position: relative; top:-10px; font-size: 11px; color: #0a0043"> Артикул: <b style="font-size: 14px; color: #0a0043">{{ product.item_code }}</b></p><p style="position: relative; top:-20px; color: #0a0043">{{ product.price }}UAH</p></div></a></span>');    
+                            }
+                    '{% endfor %}';
+                    
+                }
+                
+                function categoryList(){
+                    $(".categoryList").html('');
+                    $(".categoryList").append('<div class="brands"><button class="filterButton" id="categories"><h4 class="solid">Categories</h4></button></div><div id="catsContainer"></div>');
+                    $(".categoryList").append('<div class="brands"><button class="filterButton" id="brands"><h4 class="solid">Brands</h4><div class="arrowChange"><img src="' + "{% static 'polls/right.png' %}" + '" style="position: absolute; left: 39%; top: 23px; height: 12px"/></div></button></div></div><div id="brandsContainer"></div>');
+                    '{% for cat in categories %}';
+                        $("#catsContainer").append('<div class="categoryMenu"><a href="' + "{% if not cat.name == 'All' %}{{ cat.get_cat_url }}{% else %}{% url 'shop:ProductList' %}{% endif %}" + '"><div><button class="categoryButton" id="{{ cat.name }}" name="{{ cat.name }}"><h6 class="solid">{{ cat.name }}</h6>' + "{% if not cat.name == 'All' %}" + '<img src="' + "{% static 'polls/right.png' %}" + '" style="position: absolute; top: 28%; left: 88%; height: 18px">' + "{% endif %}" + '<div class="hideMenu">{% for subCat in subCats %}{% if subCat.category.name == cat.name %}<a href="{{ subCat.get_absolute_url }}"><div class="subCat"><h6 class="solid">{{ subCat.name }}</h6></div></a>{% endif %}{% endfor %}</div></button></a></div>');
+                    '{% endfor %}';
+                    $(".categoryButton").hover(function(){
+                        if ((this).name != 'All'){
+                            $(".goodsWindow").css('opacity', '0.3');
+                        }
+                    },
+                    function(){
+                        $(".goodsWindow").css('opacity', '1');
+                    });
+                    
+                    $("#brands").click(function(){
+                        $(".arrowChange").html('');
+                        if (brandFilters == false){
+                            brandFilters = true;
+                            $(".arrowChange").append('<img src="' + "{% static 'polls/down.png' %}" + '" style="position: absolute; left: 39%; top: 23px; height: 12px"/>');
+                            // $("#brands").css('background-color', 'red');
+                            '{% for brand in brands %}';
+                                var brand_name = delspaces('{{ brand.name }}');
+                                // console.log(brand_name);
+                                $("#brandsContainer").append('<div><button class="brandButton" id="' + brand_name + '" name="{{ brand.name }}"><h6 class="solid">{{ brand.name }}</h6></button></div>');
+                            '{% endfor %}';
+                            $(".brandButton").click(function(){
+                                var currbrand = (this).id;
+                                console.log(currbrand);
+                                var index = brandIndex((this).name, brands);
+                                if(index == -1){
+                                    brands.push((this).name);
+                                    $("#" + currbrand).css('background-color', 'red');
+                                    postProducts();
+                                }
+                                // if(brand != (this).name){
+                                //     brand = (this).name;
+                                //     $(".brandButton").css('background', 'rgba(200,200,200,0.4)');
+                                //     $("#" + brand).css('background-color', 'red');
+                                //     postProducts();
+                                // }
+                                else{
+                                    brands.splice(index, 1);
+                                    $("#brands").css('background-color', 'none');
+                                    $("#" + currbrand).css('background', 'rgba(200,200,200,0.4)');
+                                    postProducts();
+                                }
+                            });
+                        }
+                        else {
+                            brandFilters = false;
+                            $(".arrowChange").append('<img src="' + "{% static 'polls/right.png' %}" + '" style="position: absolute; left: 39%; top: 23px; height: 12px"/>');
+                            $("#brands").css('background', 'none');
+                            $("#brandsContainer").html('');
+                        }
+                        
+                    });
+                    
+                    $(".categoryList").append('<button class="removeButton" id="discount"><h6 style="color: #0a0043; text-align: center">Акция</h6></button>');
+                    $(".categoryList").append('<div style="padding: 10px"></div><button class="removeButton" id="remove"><h6 class="solid">Remove all filters</h6></button>');
+                    
+                    
+                    $("#discount").click(function(){
+                        if(discount == false) {
+                            discount = true;
+                            $("#discount").css('background-color', 'red');
+                        } 
+                        else {
+                            discount = false;
+                            $("#discount").css('background', 'rgba(200,200,200,0.4)');
+                        }
+                        postProducts();
+                    });
+                    
+                    $("#remove").click(function(){
+                        $(".brandButton").css('background', 'rgba(200,200,200,0.4)');
+                        $(".categoryButton").css('background', 'rgba(200,200,200,0.4)');
+                        // category = 'All';
+                        brands = [];
+                        discount = false;
+                        postProducts();
+                        categoryList();
+                    });
+                }
+                
+                categoryList();
+                '{% if products %}';
+                    postProducts();
+                '{% else %}';
+                    $(".goodsWindow").append('<h5 class="solid" align="center">По вашему запросу "{{ query }}"</h5><h2 class="solid" align="center">Ничего не найдено</h2>');
+                    
+                '{% endif %}';
+            </script>
+            <script>
+            $(function() {
+              $("#q").autocomplete({
+                source: 'search',
+                minLength: 2,
+                select: function(a,b) {
+                    $(this).val(b.item.value);
+                    $("#Search").submit()
+                }
+              });
+            });
+        </script>
+   
+    
+</div>
+
+<!--{% block title %}-->
+<!--  {% if category %} {{ category.name }} {% else %} Страница товаров {% endif %}-->
+<!--{% endblock %}-->
+
+<!--{% block content %}-->
+<!--  <div id="sidebar" class="col-sm-3">-->
+<!--    <h3>Категории</h3>-->
+<!--    <ul>-->
+<!--      <li {% if not category %} class="selected" {% endif %}>-->
+<!--        <a href="{% url "shop:ProductList" %}">Все</a>-->
+<!--      </li>-->
+<!--      {% for cat in categories %}-->
+<!--        <li {% if category.slug == cat.slug %} class="selected" {% endif %}>-->
+<!--          <a href="{{ cat.get_absolute_url }}">{{ cat.name }}</a>-->
+<!--        </li>-->
+<!--      {% endfor %}-->
+<!--    </ul>-->
+<!--  </div>-->
+<!--  <div id="main" class="product_list col-sm-9">-->
+<!--    <h1>{% if category %}{{ category.name }}{% else %}Товары{% endif %}</h1>-->
+<!--    <div class="items row">-->
+<!--      {% for product in products %}-->
+<!--        <div class="item col-sm-4">-->
+<!--          <a href="{{ product.get_absolute_url }}">-->
+<!--            <img src="{% if product.image %}{{ product.image.url }}{% else %}{% static "img/no-image.jpg"%}{% endif %}" class="img-responsive">-->
+<!--          </a>-->
+<!--          <a href="{{ product.get_absolute_url }}">{{ product.name }}</a><br>-->
+<!--          {{ product.price }} руб.-->
+<!--        </div>-->
+<!--      {% endfor %}-->
+<!--    </div>-->
+<!--  </div>-->
+<!--{% endblock %}</code>-->
+<!--</pre>-->

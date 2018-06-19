@@ -1,0 +1,23 @@
+{% include "shop/base.html" %}
+<div class="catalogueWindow">
+{% block content %}
+  <h1 class="solid">Спасибо за заказ</h1>
+  <p>Номер вашего заказа: {{ order.id }}</p>
+  <!--<div style="position:relative; left: 72%">-->
+    <a href="{% url 'shop:Index' %}" class="solid"><button class="categoryButton"><h5>На главную</h5></button></a>
+    <a href="{% url 'shop:ProductList' %}" class="solid"><button class="categoryButton"><h5>Продолжить Шопинг</h5></button></a>
+  <!--</div>-->
+{% endblock %}
+</div>
+<script>
+    $(function() {
+      $("#q").autocomplete({
+        source: 'search',
+        minLength: 2,
+        select: function(a,b) {
+            $(this).val(b.item.value);
+            $("#Search").submit()
+        }
+      });
+    });
+</script>

@@ -1,0 +1,488 @@
+p, h1, h2, h3, h4, h5, h6, h7, b {
+    font-size: 1.5vh;
+    font-family: verdana, sans-serif, arial;
+    color: #0a0043
+}
+
+/*body {
+    font-size: 1.5vh;
+}*/
+
+.categoryButton:hover {
+    background-color: #d5d5d5;
+} 
+.searchButton:hover {
+    background-color: #d5d5d5;
+}
+#delivery:hover{
+    background-color: #d5d5d5;
+}
+.removeButton:hover {
+    background-color: #d5d5d5;
+}
+.subCat:hover {
+    background-color: #d5d5d5;
+}
+.brandButton:hover {
+    background-color: #d5d5d5;
+}
+.sortButton:hover {
+    background-color: #d5d5d5;
+}
+.banners {
+    z-index: 0;
+}
+
+.banner_img {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    /*transform: rotateY(50deg);*/
+}
+
+.prevButton, .nextButton {
+    transform: scale(-1, 1);
+    position: absolute;
+    left: 10px;
+    height: 7%;
+    top: 30%;
+    /*z-index: 2;*/
+}
+
+.nextButton {
+    transform: unset;
+    left: unset;
+    right: 10px;
+}
+
+td, th {
+    text-align: center;
+}
+tr {
+    padding: 5px;
+    text-align: center;
+    border-bottom: 1px solid rgba(180,180,180,0.1);
+}
+.mainlogo:after {
+    position: absolute;
+    /*bottom: 30%;*/
+    content: "Final Project";
+    color: #0a0043; 
+    font-size: 24px;
+    padding-left: 5px;
+}
+.carusel {
+    background-size: 100%;
+    z-index: 0;
+    top: 18vh;
+    position: relative;
+    width: 100%;
+    height: 54vh;
+}
+.searchButton {
+    position: relative;
+    width: 27%;
+    /*bottom: -40px;*/
+    top: -36px;
+    left: 105%;
+    background: rgba(200,200,200,0.4);
+    border: 1px solid white;
+    border-radius: 7px 7px
+}
+.search {
+    position: absolute;
+    left: 35%;
+    width: 30%;
+    top: 60%;
+    /*bottom: 50px;*/
+}
+.contacts {
+    position: absolute;
+    top: 20%;
+    text-align: right;
+    right: 20px ;
+}
+.infoWindow {
+    height: 15vh;
+    background-color: white;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    top: 32px;
+    display: inline-block;
+    padding: 20px;
+}
+.orderform {
+    float:left;
+}
+.carttable {
+    position: relative;
+    border-bottom: 1px solid black;
+    text-align: center;
+    width: 100%;
+}
+.buyButton:hover {
+    background-color: #d5d5d5;
+}
+.form {
+    position: relative;
+    bottom: 130px;
+    left: 55%;
+}
+.buyButton {
+    position: relative;
+    width: 13%;
+    bottom: -40px;
+    left: -9.4%;
+    background: rgba(200,200,200,0.4);
+    border: 1px solid white;
+    border-radius: 7px 7px
+}    
+.try {
+    position: absolute;
+    width: 98%;
+    /*height: 60%;*/
+    background-color: white;
+    top: 2px;
+}
+.productWindow {
+    position: relative; 
+    top: 1%;
+    left: 1%;
+    width: 100%;
+    min-height: 400px;
+    min-width: 400px;
+    padding: 5%;
+}    
+.close {
+    position: absolute;
+    /*right: 10px;*/
+    top: 1%;
+    right: 1%;
+    border: 1px solid black;
+    width: 5%;
+}
+.refresh {
+    position: relative;
+    border: 1px solid white;
+    border-radius: 7px 7px;
+    /*background: rgba(200,200,200,0.4);*/
+    background-color: white;
+    margin-bottom: 5px;
+    top: -23px;
+    left: 45px;
+    /*width: 180px;*/
+    
+}
+.subCat {
+    position: relative;
+    /*left: -6px;*/
+    border: 1px solid rgba(200,200,200,0.1);
+    border-radius: 7px;
+    background: rgba(200,200,200,0.4);
+    margin-bottom: 7px;
+    margin-left: 5px;
+    width: 166px;
+    z-index: 3;
+}
+
+.categoryButton {
+    position: relative;
+    border: 1px solid white;
+    border-radius: 7px 7px;
+    background: rgba(200,200,200,0.4);
+    margin-bottom: 5px;
+    margin-right: 5px;
+    width: 180px;
+    z-index: 3;
+}
+.brandButton {
+    position: relative;
+    border: 1px solid white;
+    border-radius: 7px 7px;
+    background: rgba(200,200,200,0.4);
+    margin-right: 5px;
+    margin-bottom: 5px;
+    width: 180px;
+}
+
+.brand_img {
+    position: relative;
+    width: 15vw;
+    margin-top: 30px;
+}
+
+.removeButton {
+    top: 40px;
+    position: relative;
+    border: 1px solid white;
+    border-radius: 7px 7px;
+    background: rgba(200,200,200,0.4);
+    margin-bottom: 5px;
+    width: 180px;
+}
+.sortform {
+    position: relative;
+    top: -5px;
+}
+.sortButton {
+    background: none;
+    border-radius: 4px;
+    border: none;
+    height: 22px;
+    width: 22px;
+    margin-left: 5px;
+}
+.categoryList {
+    position: absolute;
+    /*top: 1%;*/
+    left: 1%;
+    top: 1%;
+}
+.brands {
+    position: relative;
+    /*left: 3%;*/
+}
+
+.goodsWindow {
+    min-height: 1500px;
+    width: 79%;
+    left: 19%;
+    top: 20px;
+    border-radius: 7px;
+    position: relative;
+    background: white; 
+}
+.relative {
+    position: relative;
+}
+.catalogueWindow
+    {
+        top: 34px;
+        /*width: 99%;*/
+        /*left: 0.5%;*/
+        border: 2px solid #eee;
+        border-radius: 7px;
+        position: relative;
+        /*min-height: 600px;*/
+        background: white;
+    }
+    
+.cartWindow
+    {
+        width: 99%;
+        min-height: 80%;
+        left: 0.5%;
+        border: 1px solid #c7c7c7;
+        border-radius: 7px 7px;
+        /*opacity: 0.7;*/
+        position: relative;
+        top: 40px;
+        background: white;
+        padding-bottom: 10px;
+        /*display: none;*/
+    }
+.brand {
+    margin: 1.5%;
+    border: none;
+    background: none;
+}    
+.brandWindow {
+    padding: 30px;
+    position: relative;
+    top: 10px;
+    border-radius: 7px;
+    border: 1px solid #ccc;
+    background-color: white;
+}
+.buttonnext 
+    {
+        vertical-align: top;
+        display: inline-block;
+        margin-left: 1.2%;
+        width: 13%;
+        top: 1px;
+        position: relative;
+        background-color: white;
+        border: 1px solid white;
+    }
+    
+.formstyle {
+   position: relative;
+   margin-bottom: 2%;
+   width: 120%;
+   margin-left: 5%;
+   border-radius: 7px 7px;
+}
+
+.test {
+    color: black;
+    font-weight: normal;
+    position: relative;
+    text-align: left;
+    padding: 30px;
+    top: -20px;
+    font-size: 9pt;
+}
+#catalogue:hover {
+    background-color: #d5d5d5;
+}
+div:hover .formstyle {
+    background-color: #d5d5d5;
+}
+/*a button:hover {*/
+/*    transform: perspective(160px) rotate3d(-1,0,0,5deg);*/
+/*}*/
+/*.windownext:hover {*/
+/*    transform: perspective(160px) rotate3d(-1,0,0,5deg);*/
+/*}*/
+.filterButton {
+    text-align: left;
+    width: 85px;
+    margin: 3%;
+    border: none;
+    background: none;
+    border-radius: 7px;
+}
+button:hover .drop {
+    display: block;
+}
+button:hover .hideMenu {
+    display: block;
+}
+/*div:hover .drop {*/
+/*    display: block;*/
+/*}*/
+.buttonnext:hover {
+    transform: perspective(160px) rotate3d(-1,0,0,3deg);
+}
+.brand:hover {
+    transform: perspective(160px) rotate3d(-1,0,0,3deg);
+}
+.dropelement:hover {
+    background-color: #d5d5d5;
+}
+
+.dropelement {
+    z-index: 1;
+    perspective: 900px;
+    transform: none;
+    position: relative;
+    top: 2px;
+    left: 0%;
+    width: 100%;
+    height: 40px;
+    border-radius: 7px 7px;
+}
+.dropdown {
+    z-index: 1;
+    display: none;
+    position: relative;
+}
+
+.drop {
+    display: none;
+    position: relative;
+}
+.hideMenu {
+    display: none;
+    position: absolute;
+    left: 100%;
+    top: 0%;
+    border-radius: 7px;
+    background-color: white;
+}
+
+.mainlink {
+    position: absolute;
+    top: -3px;
+    left: 30px;
+    color: white;
+}
+.login {
+    position: absolute;
+    border: 1px solid black;
+    background: black;
+    top: 10%;
+    right: 1%
+}
+.cart {
+    position: absolute;
+    border: 1px solid black;
+    background: black;
+    top: 10%;
+    right: 12%;
+    height: 1%;
+}
+.register {
+    position: absolute;
+    background: black;
+    top: 35%;
+    right: 3.5%;
+    height: 10%
+}
+body {
+    background: white url('http://www.gourmetretailer.com/userfiles/Rosle%20Funnel.jpg') top repeat-y;
+    background-size: 100%;
+}
+.newWindow
+    {
+        width: 100%;
+        /*border: 1px solid black;*/
+        height: 7.5%;
+        opacity: 1;
+        position: absolute;
+        top: 20vh;
+        background-color: white; 
+    }
+.window 
+    {
+        width: 100%;
+        height: 5%;
+        position: fixed;
+        border: 2px solid black;
+        opacity: 0.9;
+        background: rgba(0,0,0,1);
+        z-index: 5;
+    }
+.solid
+    {
+        color: #0a0043;
+    }
+
+.windownext 
+    {
+        z-index: 1;
+        margin-left: 0.5%;
+        top: 5px;
+        width: 11.75%;
+        position: relative;
+        left: 0.3%;
+        border: 1px solid #eee;
+        border-radius: 7px 7px;
+        /*opacity: 1;*/
+        background-color: white
+    }
+
+.windownext1 
+    {
+        margin-left: 1%;
+        top: 5px;
+        width: 13%;
+        position: absolute;
+        /*left: 0px;*/
+        border: 2px solid white;
+        border-radius: 7px 7px;
+        opacity: 1;
+        background: rgba(200,200,200,0.4)
+    }
+
+.registerWindow {
+    position: relative;
+    width: 98%;
+    height: 70vh;
+    top: 10vh;
+    left: 1%;
+    border: 1px solid red;
+} 
