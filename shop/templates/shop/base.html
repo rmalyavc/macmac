@@ -195,7 +195,7 @@
                 '{% for ad in ads %}';
                     var testobject = {};
                     testobject.name = '{{ ad.name }}';
-                    testobject.img = '{{ ad.img }}';
+                    testobject.img = 'media/{{ ad.img }}';
                     testobject.link = '{{ ad.get_absolute_url }}';
                     ads.push(testobject);
                 '{% endfor %}';
