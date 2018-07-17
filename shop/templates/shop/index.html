@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="initial-scale=1, width=device-width" />
+	<title>MacMac</title>
+	
+  {% load static %}
+  
+	<link rel="stylesheet" href="{% static 'polls/styles.css' %}" />
+</head>
+<body>
+
+<!-- header -->
+<header class="header">
+  <div class="navbar">
+
+    <a class="brand" href="">
+      <img src="img/ui/logo.svg" alt="MacMac">
+    </a>
+
+    <div class="cart">
+      <!-- {% with total_items=cart|length %} -->
+      <a class="amount" href="https://">
+        <img src="img/ui/shopping-cart.svg" alt="Корзина">
+        <span>28<!-- {{ total_items }} --></span>
+        <b>Корзина</b>
+        <!-- {% endwith %} -->
+      </a>
+    </div>
+
+    <nav class="nav">
+      <ul>
+        <li><a href="">iPhone</a></li>
+        <li><a href="">iPad</a></li>
+        <li><a href="">MacBook</a></li>
+        <li><a href="">Mac</a></li>
+        <li><a href="">Watch</a></li>
+        <li><a href="">Apple TV</a></li>
+        <li><a href="">Аксессуары</a></li>
+      </ul>
+    </nav>
+
+  </div><!-- /. navbar -->
+</header><!-- /. header -->
+
+<main>
+  <!-- slides -->
+  <section class="slides" id="slideshow">
+
+    <div class="slide">
+      <h1>iPhone X</h1>
+      <p>Успей купить!</p>
+      <picture>
+        <source srcset="img/ads/iphonex.png" ><!-- media="(min-width: 600px)" -->
+        <img src="img/ads/iphonex.png" alt="iPhone X">
+      </picture>
+      <form action="/example/">
+        <button class="button"><span>Купить сейчас</span></button>
+      </form>
+    </div>
+
+    <div class="slide">
+      <h1>iPhone 8</h1>
+      <p>Уже в продаже!</p>
+      <picture>
+        <source srcset="img/ads/iphone8.png" >
+        <img src="img/ads/iphone8.png" alt="iPhone 8">
+      </picture>
+      <form action="/example/">
+        <button class="button"><span>Купить сейчас</span></button>
+      </form>
+    </div>
+
+    <div class="slide">
+      <h1>iPad Air</h1>
+      <p>Всегда в моде!</p>
+      <picture>
+        <source srcset="img/ads/ipadair.png" >
+        <img src="img/ads/ipadair.png" alt="iPad Air">
+      </picture>
+      <form action="/example/">
+        <button class="button"><span>Купить сейчас</span></button>
+      </form>
+    </div>
+
+    <a class="prev" onclick="plusSlides(-1, 'slideshow')">&#10094;</a>
+    <a class="next" onclick="plusSlides(1, 'slideshow')">&#10095;</a>
+
+  </section><!-- /. slides -->
+
+
+  <!-- showcase -->
+  <section class="showcase section">
+
+    <div class="item imac">
+      <div class="item-description">
+        <h1>iMac</h1>
+        <p>Лучший компьютер в мире, который буквально погрузит вас в контент.</p>
+        <form action="/example/">
+          <button class="button"><span>Подробнее</span></button>
+        </form>
+      </div>
+    </div>
+
+    <div class="item watch">
+      <div class="item-description">
+        <h1>Apple Watch</h1>
+        <p>Самые совершенные часы. Выбери из огромной коллекции именно свои.</p>
+        <form action="/example/">
+          <button class="button"><span>Подробнее</span></button>
+        </form>
+      </div>
+    </div>
+
+    <div class="item case">
+      <div class="item-description">
+        <h1>Чехлы для iPhone</h1>
+        <p>Огромный ассортимент чехлов. Каждому придется по вкусу.</p>
+        <form action="/example/">
+          <button class="button"><span>Подробнее</span></button>
+        </form>
+      </div>
+    </div>
+
+    <div class="item airpods">
+      <div class="item-description">
+        <h1>AirPods</h1>
+        <p>Никаких проводов. Никаких сложностей. Чистая магия!</p>
+        <form action="/example/">
+          <button class="button"><span>Подробнее</span></button>
+        </form>
+      </div>
+    </div>
+
+  </section><!-- /. showcase -->
+
+  <section class="gadgets section">
+    <div class="item-description">
+      <h1>Только оригинальная техника от Apple</h1>
+      <p>По лучшим ценам на украинском рынке</p>
+      <form action="/example/">
+        <button class="button"><span>Подробнее</span></button>
+      </form>
+    </div>
+  </section>
+
+  <section class="accessories section">
+    <div class="item-description">
+      <h1>Огромное разнообразие аксессуаров</h1>
+      <p>Которые подчеркнут вашу неповторимую индивидуальность</p>
+      <form action="/example/">
+        <button class="button"><span>Подробнее</span></button>
+      </form>
+    </div>
+  </section>
+
+  <section class="hits">
+    <h1>Хиты продаж</h1>
+
+    <a class="prev" onclick="plusSlides(-1, 'slides')">&#10094;</a>
+    <a class="next" onclick="plusSlides(1, 'slides')">&#10095;</a>
+
+
+    <div class="hits-group " id="slides">
+
+      <div class="item">
+        <div class="item-description">
+          <picture>
+            <source srcset="img/products/applewatch.png" >
+            <img src="img/products/applewatch.png" alt="Apple Watch">
+          </picture>
+          <p>Apple Watch Series 3 GPS + Cellular 38mm Gold Aluminium Case with Pink Sand Sport Band</p>
+          <h4 class="item-price">20 399 грн</h4>
+          <small>Артикул 9999</small>
+          <form action="example/">
+            <button class="button"><span>Купить</span></button>
+          </form>
+        </div> 
+      </div>
+
+      <div class="item">
+        <div class="item-description">
+          <picture>
+            <source srcset="img/products/applewatch.png" >
+            <img src="img/products/applewatch.png" alt="Apple Watch">
+          </picture>
+          <p>Apple Watch Series 3 GPS + Cellular 38mm Gold Aluminium Case with Pink Sand Sport Band</p>
+          <h4 class="item-price">9 399 грн</h4>
+          <small>Артикул 9999</small>
+          <form action="/example/">
+            <button class="button"><span>Купить</span></button>
+          </form>
+        </div> 
+      </div>
+
+      <div class="item">
+        <div class="item-description">
+          <picture>
+            <source srcset="img/products/applewatch.png" >
+            <img src="img/products/applewatch.png" alt="Apple Watch">
+          </picture>
+          <p>Apple Watch Series 3 GPS + Cellular 38mm Gold Aluminium Case with Pink Sand Sport Band</p>
+          <h4 class="item-price">10 399 грн</h4>
+          <small>Артикул 9999</small>
+          <form action="/example/">
+            <button class="button"><span>Купить</span></button>
+          </form>
+        </div> 
+      </div>
+
+      <div class="item">
+        <div class="item-description">
+          <picture>
+            <source srcset="img/products/applewatch.png" >
+            <img src="img/products/applewatch.png" alt="Apple Watch">
+          </picture>
+          <p>Apple Watch Series 3 GPS + Cellular 38mm Gold Aluminium Case with Pink Sand Sport Band</p>
+          <h4 class="item-price">15 399 грн</h4>
+          <small>Артикул 9999</small>
+          <form action="/example/">
+            <button class="button"><span>Купить</span></button>
+          </form>
+        </div> 
+      </div>
+
+    </div>
+
+    <div class="hits-button">
+      <form action="/example/">
+        <button class="button"><span>Посмотреть все</span></button>
+      </form>
+    </div>
+
+    <div class="hits-description">
+      <div>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+          Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+          Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, 
+          totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. 
+          Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, 
+          sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+        <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, 
+          sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
+      </div>
+
+      <div>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+          Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+          Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, 
+          totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. 
+          Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, 
+          sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+        <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, 
+          sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
+      </div>
+    </div>
+
+  </section>
+</main>
+
+<!-- footer -->
+<footer class="footer">
+
+  <div class="contacts">
+
+    <ul class="contacts-brand">
+      <li><a class="brand" href=""><img src="img/logo.svg" alt="MacMac"></a></li>
+      <li><a>Интернет-магазин аксессуаров и техники Apple</a></li>
+    </ul>
+
+    <ul>
+      <li><a href="">Информация</a></li>
+      <li><a href="">О магазине</a></li>
+      <li><a href="">Доставка и оплата</a></li>
+      <li><a href="">Гарантия</a></li>
+      <li><a href="">Контакты</a></li>
+    </ul>
+
+    <ul>
+      <li><a href="/catalog.html">Каталог</a></li>
+      <li><a href="">iPhone</a></li>
+      <li><a href="">iPad</a></li>
+      <li><a href="">MacBook</a></li>
+      <li><a href="">Mac</a></li>
+      <li><a href="">Apple Watch</a></li>
+      <li><a href="">Apple TV</a></li>
+      <li><a href="">Аксессуары</a></li>
+    </ul>
+
+    <ul>
+      <li><a href="">Аккаунт</a></li>
+      <li><a href="">Войти в аккаунт</a></li>
+      <li><a href="">Регистрация</a></li>
+    </ul>
+
+    <ul>
+      <li><a href="">Связаться с нами</a></li>
+      <li><a href="tel:">+38(063)123-45-67</a></li>
+      <li><a href="tel:">+38(050)123-45-67</a></li>
+      <li><a href="tel:">+38(067)123-45-67</a></li>
+      <li><a href="mailto:info@macmac.com.ua">info@macmac.com.ua</a></li>
+    </ul>
+
+    <ul>
+      <li><a>MacMac в соцсетях</a></li>
+      <li><a href=""><img src="img/ui/fb.png" alt=""></a></li>
+      <li><a href=""><img src="img/ui/instagram.png" alt=""></a></li>
+    </ul>
+
+  </div>
+
+</footer><!-- ./ footer -->
+
+<!-- JS Core -->
+<script src="js/main.js"></script>
+</body>
+</html>
