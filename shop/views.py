@@ -144,7 +144,7 @@ def Index(request):
         for prod in products:
             if prod.color == col and col not in cols:
                 cols.append(col)
-    return render(request, 'shop/base.html', {
+    return render(request, 'shop/index.html', {
         'index': index,
         'categories': categories,
         'ads': news,
