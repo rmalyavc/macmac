@@ -112,7 +112,7 @@
                                         {% endif %}
                                     {% endfor %}
                                     <div class="dropelement">
-                                        <a href="{% url 'shop:ProductList' %}">
+                                        <a href="{% url 'shop:FakeList' %}">
                                             <dt><p class="test">All</p></dt>
                                         </a>
                                     </div>
@@ -148,9 +148,29 @@
             </div>
             <h1>
                 {% if user.is_authenticated %}
-                    Hello {{ user.avatar }}
+                    Hello {{ user.username }}
                 {% endif %}
             </h1>
+            {% for filt in filts %}
+                <h1>{{ filt.id }} {{ filt.name }}</h1>
+                {% if filt.name == "color" %}
+                    {% for color in cols %}
+                        <h5>{{ color.id }} {{ color.name }}</h5>
+                    {% endfor %}
+                {% elif filt.name == "diagonal" %}
+                    {% for diag in diags %}
+                        <h5>{{ diag.id }} {{ diag.val }} {{ diag.unit }}</h5>
+                    {% endfor %}
+                {% elif filt.name == "ram" %}
+                    {% for ram in rams %}
+                        <h5>{{ ram.id }} {{ ram.val }} {{ ram.unit }}</h5>
+                    {% endfor %}
+                {% elif filt.name == "memory" %}
+                    {% for mem in mems %}
+                        <h5>{{ mem.id }} {{ mem.val }} {{ mem.unit }}</h5>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
         {% endif %}
         <script>
             $(function() {

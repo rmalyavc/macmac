@@ -252,7 +252,7 @@ tr {
     top: 20px;
     border-radius: 7px;
     position: relative;
-    background: white; 
+    background: white;
 }
 .relative {
     position: relative;
@@ -485,4 +485,51 @@ body {
     top: 10vh;
     left: 1%;
     border: 1px solid red;
-} 
+}
+
+#fake_cont {
+    border: 1px solid red;
+}
+
+#fake_goods {
+    position: absolute;
+    width: 85%;
+    height: 80%;
+    right: 1%;
+    top: 1%;
+    /*box-shadow: 0 0 10px rgba(0,0,0,0.5);*/
+    /*border-radius: 5px;*/
+}
+
+#fake_win {
+    height: 100vh;
+}
+
+.product_block {
+    position: relative;
+    width: 12%;
+    height: 25vh;
+    box-shadow: ;
+    display: inline-block;
+    margin: 1%;
+    vertical-align: top;
+    text-align: center;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    border-radius: 5px;
+    color: black;
+    text-decoration: none !important;
+}
+
+.product_img {
+    position: relative;
+    vertical-align: middle;
+    /*width: 60%;*/
+    height: 50%;
+    /*left: 20%;*/
+}
+
+.product_name, .product_price {
+    position: relative;
+    bottom: 0;
+}

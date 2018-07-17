@@ -24,6 +24,9 @@ urlpatterns = [
     url(r'^catalogue/(?P<category_slug>[-\w]+)/$', views.ProductList, name='ProductListByCategory'),
     url(r'^delivery/$', views.Delivery, name='Delivery'),
     url(r'^register/$', views.Register, name='Register'),
+    url(r'^fakecatalogue/$', views.FakeList, name='FakeList'),
+    url(r'^fakecatalogue/(?P<category_slug>[-\w]+)/$', views.FakeList, name='FakeListByCategory'),
+    url(r'^filted_goods/$', views.FiltedGoods, name='filted_goods'),
     # path('accounts/', include('allauth.urls')),
     # url(r'^social/', include('rest_framework_social_oauth2.urls')),
 ]

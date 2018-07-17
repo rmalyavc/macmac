@@ -1,0 +1,128 @@
+{% include 'shop/base.html' %}
+
+{% load static %}
+
+<div class="catalogueWindow" id="fake_win">
+    <input type="hidden" id="token" value="{% csrf_token %}">
+    <div class="categoryList" id="fake_cont">
+        <div class="filter_cont" id="subcat">
+        	{% if category_slug == None or category_slug == 'all' %}
+        		{% for cat in categories %}
+        			{% if not category and not cat.name == 'none' and cat.id > 8 %}
+        				<a href="{{ cat.get_fake_url }}">{{ cat.name }}</a><br>
+        			{% elif category %}
+        				<input type="checkbox" class="filter_val" id="{{ cat.name }}"><strong>{{ cat.name }}</strong><br>
+        			{% endif %}
+        		{% endfor %}
+        	{% endif %}
+        </div>
+    	{% if filts %}
+    		{% for filt in filts %}
+        			{% for key, values in vals.items %}
+        				{% if key == filt.name and values|length > 0 %}
+                            <div id="{{ filt.name }}" class="filter_cont">
+                                <h5><strong>{{ filt.id }} {{ filt.name }}</strong></h5>
+        						{% for val in values %}
+        							<input type="checkbox" class="filter_val" id="{{ val.name }}"><strong>{{ val }}</strong><br>
+        						{% endfor %}
+                            </div>
+    					{% endif %}
+        			{% endfor %}
+    		{% endfor %}
+            {% if refs %}
+                <div id="refer_to" class="filter_cont">
+                    <h4>Refers to</h4>
+                    {% for ref in refs %}
+                        <input type="checkbox" class="filter_val" id="{{ ref.name }}"><strong>{{ ref.name }}</strong><br>
+                    {% endfor %}
+                </div>
+            {% endif %}
+    	{% endif %}
+    </div>
+    <div id="fake_goods">
+    	{% for product in goods %}
+			<a href="{{ product.get_absolute_url }}" class="product_block" id="{{ product.item_code }}">
+	    		<img class="product_img" src="{% if filts %}../{% endif %}../media/{{ product.image }}"/><br>
+	    		<h5 class="product_name">{{ product.name }}</h5>
+	    		<h5 class="product_price">{{ product.price }}</h5>
+	    	</a>
+    	{% endfor %}
+    </div>
+    <script type="text/javascript">
+        function post_products(goods) {
+            var cont = document.getElementById('fake_goods');
+            var tmp;
+            cont.innerHTML = '';
+            if (goods.length === 0)
+                return ;
+            for (var i = 0; i < goods.length; i++) {
+                tmp = goods[i].fields;
+                cont.innerHTML += '<a class="product_block" id="' + tmp.item_code + '" href="' + tmp.url + '">' +
+                    '<img class="product_img" src="../../media/' + tmp.image + '"><br>' +
+                    '<h5 class="product_name">' + tmp.name + '</h5>' +
+                    '<h5 class="product_price">' + tmp.price + '</h5></a>';
+            }
+        }
+
+        function get_filt_vals(list) {
+            if (!list || list.length === 0)
+                return (null);
+            var cont = [];
+            var vals = list.getElementsByClassName('filter_val');
+            if (!vals || vals.length === 0)
+                return (null);
+            for (var i = 0; i < vals.length; i++) {
+                if (vals[i].checked)
+                    cont.push(vals[i].id);
+            }
+            if (cont.length === 0)
+                return (null);
+            return (cont);
+        }
+
+        function get_filters() {
+            var filts = document.getElementsByClassName('filter_cont');
+            if (!filts || filts.length === 0)
+                return (null);
+            var cont = {};
+            var tmp = [];
+            for (var i = 0; i < filts.length; i++) {
+                tmp = get_filt_vals(filts[i]);
+                if (tmp !== null)
+                    cont[filts[i].id] = tmp;
+            }
+            return (cont);
+        }
+
+        function get_filted_goods(elem) {
+            var xhttp = new XMLHttpRequest();
+            var res = get_filters();
+            var cont;
+            res.category_slug = '{{ category.slug }}';
+            if (!elem || elem.getAttribute('class') === 'filter_val')
+                res.from = 0;
+            else
+                res.from = intval(elem.name) * 9 - 9;
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    post_products(JSON.parse(this.responseText));
+                }
+            };
+            xhttp.open("POST", "{% url 'shop:filted_goods' %}", true);
+            xhttp.setRequestHeader("Content-type", "application/json");
+            xhttp.setRequestHeader("X-CSRFToken", '{{ csrf_token }}');
+            xhttp.send(JSON.stringify(res));
+        }
+
+        function set_listeners() {
+            var cont = document.getElementsByClassName('filter_val');
+            for (var i = 0; i < cont.length; i++) {
+                cont[i].addEventListener('change', function() {
+                    get_filted_goods(cont[i]);
+                });
+            }
+        }
+        set_listeners();
+        // get_filted_goods();
+    </script>
+</div>

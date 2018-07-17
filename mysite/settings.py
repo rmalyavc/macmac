@@ -41,7 +41,7 @@ SECRET_KEY = '+4&)1#qwmh2)4wopqrzw00r=2%@8lm#$-!xvlg$7nu+50r@_ay'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '38fc0d46.ngrok.io', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'e65a5651.ngrok.io', 'localhost']
 
 CART_SESSION_ID = 'cart'
 

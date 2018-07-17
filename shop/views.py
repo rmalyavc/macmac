@@ -1,11 +1,129 @@
 from django.shortcuts import render_to_response, render, get_object_or_404
-from .models import Category, Product, Ad, Brand, SubCat
+from .models import Category, Product, Ad, Brand, SubCat, Filt, Color, Memory, Unit, Ram, Proc, Diagonal, Material, Display
 from cart.forms import CartAddProductForm
 from django.http import JsonResponse, HttpResponse
 import json
 from django.urls import reverse
 from cart.cart import Cart
+from django.core import serializers
 
+def get_goods(cats):
+    products = Product.objects.all()
+    goods = []
+    for product in products:
+        if product.category in cats:
+            goods.append(product)
+    return goods
+
+def get_filt_vals(filt, products):
+    cont = []
+    if filt.name == 'color':
+        for product in products:
+            if not product.color in cont:
+                cont.append(product.color)
+    elif filt.name == 'diagonal':
+        for product in products:
+            if not product.diagonal in cont:
+                cont.append(product.diagonal)
+    elif filt.name == 'memory':
+        for product in products:
+            if not product.memory in cont:
+                cont.append(product.memory)
+    elif filt.name == 'ram':
+        for product in products:
+            if not product.ram in cont:
+                cont.append(product.ram)
+    elif filt.name == 'material':
+        for product in products:
+            if not product.material in cont:
+                cont.append(product.material)
+    elif filt.name == 'processor':
+        for product in products:
+            if not product.proc in cont:
+                cont.append(product.proc)
+    elif filt.name == 'display':
+        for product in products:
+            if not product.display in cont:
+                cont.append(product.display)
+    return cont
+
+def get_refs(goods, refs):
+    for product in goods:
+        for category in product.refer_to.all():
+            if not category in refs:
+                refs.append(category)
+    return refs
+
+def ajax_goods(filts):
+    goods = Product.objects.all()
+    for key in filts:
+        print("key = ", key, filts[key])
+        if key == 'category_slug':
+            goods = goods.filter(category__category__slug = filts[key])
+        elif key == 'color':
+            goods = goods.filter(color__name__in = filts[key])
+        elif key == 'diagonal':
+            goods = goods.filter(diagonal__name__in = filts[key])
+        elif key == 'memory':
+            goods = goods.filter(memory__name__in = filts[key])
+        elif key == 'ram':
+            goods = goods.filter(ram__name__in = filts[key])
+        elif key == 'proc':
+            goods = goods.filter(proc__name__in = filts[key])
+        elif key == 'material':
+            goods = goods.filter(material__name__in = filts[key])
+        elif key == 'refer_to':
+            goods = goods.filter(refer_to__in = SubCat.objects.all().filter(name__in = filts[key]))
+        elif key == 'subcat':
+            goods = goods.filter(category__name__in = filts[key])
+    goods = goods[filts['from']:9]
+    return (goods)
+
+
+def FiltedGoods(request, category_slug=None):
+    data = json.loads(request.body)
+    goods = ajax_goods(data)
+    cont = ''
+    i = 0
+    for item in goods:
+        item.url = reverse('shop:ProductDetail', args=[item.id, item.slug])
+        if not item.name == None:
+            print(item.name)
+    data = serializers.serialize("json", goods)
+    return HttpResponse(data)
+
+def FakeList(request, category_slug=None):
+    # ordering = request.GET.get("sort");
+    if category_slug == None or category_slug == 'all':
+        categories = Category.objects.all().order_by('id')
+        goods = Product.objects.all()
+        return render(request, 'shop/product/fakelist.html', {
+            'categories': categories,
+            'goods': goods,
+        })
+    else:
+        cont = {}
+        refs = []
+        categories = []
+        cat = Category.objects.get(slug = category_slug)
+        cats = SubCat.objects.all().filter(category = cat)
+        goods = get_goods(cats)
+        filts = Filt.objects.filter(cats=cat).order_by('id')
+        for filt in filts:
+            cont[filt.name] = get_filt_vals(filt, goods)
+        if category_slug == 'accessories':
+            refs = get_refs(goods, refs)
+        for product in goods:
+            if not product.category in categories:
+                categories.append(product.category)
+        return render(request, 'shop/product/fakelist.html', {
+            'goods': goods,
+            'category': cat,
+            'categories': categories,
+            'filts': filts,
+            'vals': cont,
+            'refs': refs,
+        })
 
 def Index(request):
     index = 'index'
@@ -13,12 +131,31 @@ def Index(request):
     news = Ad.objects.filter(active=True)
     categories = Category.objects.all()
     cart = Cart(request)
+    products = Product.objects.all()
+    cat_object = Category.objects.get(name='Mac')
+    filts = Filt.objects.filter(cats=cat_object).order_by('id')
+    colors = Color.objects.all().order_by('id')
+    mems = Memory.objects.all().order_by('id')
+    rams = Ram.objects.all().order_by('id')
+    proces = Proc.objects.all().order_by('id')
+    diagonals = Diagonal.objects.all().order_by('id')
+    cols = []
+    for col in colors:
+        for prod in products:
+            if prod.color == col and col not in cols:
+                cols.append(col)
     return render(request, 'shop/base.html', {
         'index': index,
         'categories': categories,
         'ads': news,
         'brands': brands,
         'cart': cart,
+        'filts': filts,
+        'cols': cols,
+        'mems': mems,
+        'rams': rams,
+        'proces': proces,
+        'diags': diagonals,
     })
     
 def Brands(request):
@@ -55,7 +192,6 @@ def SubCats(request, category_slug):
     return render(request, 'shop/brands.html', {
         'subCats': result
     })        
-    
 
 # Страница с товарами
 def ProductList(request, category_slug=None):
@@ -63,9 +199,9 @@ def ProductList(request, category_slug=None):
     originalquery = request.GET.get("q")
     ordering = request.GET.get("sort")
     cat = request.GET.get("cat")
+    print(category_slug)
     if cat != None:
         category_slug = cat
-    print(category_slug)
     brands = Brand.objects.all()
     categories = Category.objects.all()
     subCats = SubCat.objects.all()
