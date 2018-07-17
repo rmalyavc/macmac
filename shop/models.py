@@ -24,7 +24,7 @@ class Brand(models.Model):
 class Ad(models.Model):
     name = models.CharField(max_length=200, db_index=True)
     slug = models.SlugField(max_length=200, db_index=True, unique=True)
-    img = models.CharField(max_length=300, db_index=True) 
+    img = models.ImageField(upload_to="polls/static/shop/ads/", blank=True, verbose_name="Изображение товара") 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     description = models.CharField(max_length=1000, db_index=True)
