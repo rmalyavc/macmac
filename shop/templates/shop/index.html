@@ -17,28 +17,37 @@
   <div class="navbar">
 
     <a class="brand" href="">
-      <img src="img/ui/logo.svg" alt="MacMac">
+      <img src="{% static 'polls/images/ui/logo.svg' %}" alt="MacMac">
     </a>
 
     <div class="cart">
-      <!-- {% with total_items=cart|length %} -->
+
+      {% with total_items=cart|length %}
+
       <a class="amount" href="https://">
-        <img src="img/ui/shopping-cart.svg" alt="Корзина">
-        <span>28<!-- {{ total_items }} --></span>
+        <img src="{% static 'polls/images/ui/shopping-cart.svg' %}" alt="Корзина">
+        <span>{{ total_items }}</span>
         <b>Корзина</b>
-        <!-- {% endwith %} -->
+
+        {% endwith %}
+
       </a>
     </div>
 
     <nav class="nav">
       <ul>
-        <li><a href="">iPhone</a></li>
+        {% for cat in categories %}
+          {% if not cat.name == 'none' and cat.id > 8 %}
+            <li><a href="{{ cat.get_fake_url }}">{{ cat.name }}</a></li>
+          {% endif %}
+        {% endfor %}
+        <!-- <li><a href="">iPhone</a></li>
         <li><a href="">iPad</a></li>
         <li><a href="">MacBook</a></li>
         <li><a href="">Mac</a></li>
         <li><a href="">Watch</a></li>
         <li><a href="">Apple TV</a></li>
-        <li><a href="">Аксессуары</a></li>
+        <li><a href="">Аксессуары</a></li> -->
       </ul>
     </nav>
 
@@ -48,12 +57,25 @@
 <main>
   <!-- slides -->
   <section class="slides" id="slideshow">
+    {% for item in ads %}
+      <div class="slide">
+        <h1>{{ item.name }}</h1>
+        <p>{{ item.description }}</p>
+        <picture>
+          <source srcset="media/{{ item.img }}" ><!-- media="(min-width: 600px)" -->
+          <img src="media/{{ item.img }}" alt="{{ item.name }}">
+        </picture>
+        <form action="/example/">
+          <button class="button" type="button" onclick="location.href='{{ item.product.get_absolute_url }}'"><span>Купить сейчас</span></button>
+        </form>
+      </div>
+    {% endfor %}
 
-    <div class="slide">
+    <!-- <div class="slide">
       <h1>iPhone X</h1>
       <p>Успей купить!</p>
       <picture>
-        <source srcset="img/ads/iphonex.png" ><!-- media="(min-width: 600px)" -->
+        <source srcset="img/ads/iphonex.png" >
         <img src="img/ads/iphonex.png" alt="iPhone X">
       </picture>
       <form action="/example/">
@@ -83,7 +105,7 @@
       <form action="/example/">
         <button class="button"><span>Купить сейчас</span></button>
       </form>
-    </div>
+    </div> -->
 
     <a class="prev" onclick="plusSlides(-1, 'slideshow')">&#10094;</a>
     <a class="next" onclick="plusSlides(1, 'slideshow')">&#10095;</a>
@@ -165,6 +187,24 @@
 
     <div class="hits-group " id="slides">
 
+      {% for item in goods %}
+        <div class="item">
+          <div class="item-description">
+            <picture>
+              <source srcset="media/{{ item.image }}" >
+              <img src="media/{{ item.image }}" alt="{{ item.name }}">
+            </picture>
+            <p>{{ item.name }}</p>
+            <h4 class="item-price">{{ item.price }} грн</h4>
+            <small>Артикул {{ item.item_code }}</small>
+            <form action="example/">
+              <button class="button" type="button" onclick="location.href='{{ item.get_absolute_url }}'"><span>Купить</span></button>
+            </form>
+          </div> 
+        </div>
+      {% endfor %}
+
+      <!-- 
       <div class="item">
         <div class="item-description">
           <picture>
@@ -223,7 +263,7 @@
             <button class="button"><span>Купить</span></button>
           </form>
         </div> 
-      </div>
+      </div> -->
 
     </div>
 
@@ -318,6 +358,6 @@
 </footer><!-- ./ footer -->
 
 <!-- JS Core -->
-<script src="js/main.js"></script>
+<script src="{% static 'polls/scripts/main.js' %}"></script>
 </body>
 </html>

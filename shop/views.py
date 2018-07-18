@@ -81,7 +81,7 @@ def ajax_goods(filts):
 
 
 def FiltedGoods(request, category_slug=None):
-    data = json.loads(request.body)
+    data = json.loads(request.body.decode('utf-8'))
     goods = ajax_goods(data)
     cont = ''
     i = 0
@@ -139,6 +139,7 @@ def Index(request):
     rams = Ram.objects.all().order_by('id')
     proces = Proc.objects.all().order_by('id')
     diagonals = Diagonal.objects.all().order_by('id')
+    goods = Product.objects.all().filter(discount=True)[:4]
     cols = []
     for col in colors:
         for prod in products:
@@ -156,6 +157,7 @@ def Index(request):
         'rams': rams,
         'proces': proces,
         'diags': diagonals,
+        'goods': goods,
     })
     
 def Brands(request):

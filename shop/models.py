@@ -20,27 +20,6 @@ class Brand(models.Model):
     def get_absolute_url(self):
         return reverse('shop:BrandDetail', args=[self.id, self.slug])
 
-
-class Ad(models.Model):
-    name = models.CharField(max_length=200, db_index=True)
-    slug = models.SlugField(max_length=200, db_index=True, unique=True)
-    img = models.ImageField(upload_to="polls/static/shop/ads/", blank=True, verbose_name="Изображение товара") 
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-    description = models.CharField(max_length=1000, db_index=True)
-    active = models.BooleanField(default=True, verbose_name="Активно")
-    
-    class Meta:
-        ordering = ['created', 'updated']
-        verbose_name = 'Объявление'
-        verbose_name_plural = 'Обявления'
-        
-    def __str__(self):
-        return self.name
-    
-    def get_absolute_url(self):
-        return reverse('shop:News', args=[self.slug])
-
     
 # Модель категории
 class Category(models.Model):
@@ -238,6 +217,27 @@ class Product(models.Model):
     
     def get_absolute_url(self):
         return reverse('shop:ProductDetail', args=[self.id, self.slug])
+
+class Ad(models.Model):
+    name = models.CharField(max_length=200, db_index=True)
+    slug = models.SlugField(max_length=200, db_index=True, unique=True)
+    img = models.ImageField(upload_to="polls/static/shop/ads/", blank=True, verbose_name="Изображение товара")
+    product = models.ForeignKey(Product, related_name='product', verbose_name="Товар", default=0, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    description = models.CharField(max_length=1000, db_index=True)
+    active = models.BooleanField(default=True, verbose_name="Активно")
+    
+    class Meta:
+        ordering = ['created', 'updated']
+        verbose_name = 'Объявление'
+        verbose_name_plural = 'Обявления'
+        
+    def __str__(self):
+        return self.name
+    
+    def get_absolute_url(self):
+        return reverse('shop:News', args=[self.slug])
 
 class Client(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="client")
